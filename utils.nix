@@ -4,6 +4,7 @@ let
     elemAt
     filter
     foldl'
+    genList
     head
     lessThan
     readFile
@@ -21,6 +22,7 @@ let
     ++ (enumerate { index = index + 1; list = tail list; });
 
   parseInt = str:
+    if str == "" then 0 else
     if str == "0" then 0 else
     if str == "1" then 1 else
     if str == "2" then 2 else
@@ -53,6 +55,13 @@ let
 
   splitLines = str: splitBy "\n" str;
 
+  sublist = start: end: list:
+    let
+      len = end - start;
+      gen = genList (x: x + start) len;
+    in
+      map (elemAt list) gen;
+  
   sum = list: foldl' add 0 list;
 
   unzip = list:
@@ -90,6 +99,7 @@ in
       sortAscending
       splitBy
       splitLines
+      sublist
       sum
       unzip
       zip;
