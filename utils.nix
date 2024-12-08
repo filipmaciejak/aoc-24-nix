@@ -7,6 +7,7 @@ let
     genList
     head
     lessThan
+    mul
     readFile
     split
     sort
@@ -20,6 +21,10 @@ let
     if list == [] then [] else
     [ { idx = index; val = head list; } ]
     ++ (enumerate { index = index + 1; list = tail list; });
+
+  nestedMap = f: level: input:
+    if level == 0 then f input else
+    map (nestedMap f (level - 1)) input;
 
   parseInt = str:
     if str == "" then 0 else
@@ -64,6 +69,8 @@ let
   
   sum = list: foldl' add 0 list;
 
+  product = list: foldl' mul 1 list;
+
   unzip = list:
     foldl' (acc: item:
       let
@@ -93,8 +100,10 @@ in
     inherit
       abs
       enumerate
+      nestedMap
       parseInt
       pow
+      product
       readLines
       sortAscending
       splitBy
